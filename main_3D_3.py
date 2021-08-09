@@ -2,31 +2,28 @@ import numpy as np
 import nibabel as nib
 import argparse
 from pathlib import Path
-import os
+# import os
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-if', '--input_format', default='.nii.gz', type=str, choices=['.nii.gz', '.nii'], dest='input_format')
-parser.add_argument('-ip', '--input_path', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1/', type=str, dest='input_path')
+parser.add_argument('-ip', '--input_path', required=True, type=str, dest='input_path')
 parser.add_argument('-f', '--factor', default=2, type=int, dest='factor')
-parser.add_argument('-d', '--dimension', default='2', choices=['2', '3'], type=str, dest='dimension')
+parser.add_argument('-d', '--dimension', default='3', choices=['2', '3'], type=str, dest='dimension')
 parser.add_argument('-x', '--axis_2D', default=1, choices=[0, 1, 2], type=int, dest='axis_2D')
 parser.add_argument('-of', '--output_format', default='.nii.gz', type=str, choices=['.nii.gz', '.nii'], dest='output_format')
-parser.add_argument('-opl', '--output_path_LR', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1_2D_LR/', type=str, dest='output_path_LR')
-parser.add_argument('-oph', '--output_path_HR', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1_2D_HR/', type=str, dest='output_path_HR')
 args = parser.parse_args()
 
 ##### Retrieve list of files in the input path
-files = os.listdir(args.input_path)
+files = Path(args.input_path).iterdir()
 
 ##### Loop over input files
 for f in files:
-
-    file_name = f[:-len(args.input_format)]
+    file_name = str(f)[:-len(args.input_format)]
     print('starting file: ', f)
 
     
     ##### load image as HR
-    data = nib.load(args.input_path + file_name + args.input_format)
+    data = nib.load(Path(file_name + args.input_format))
     # print("data: ", data.shape)
 
 
@@ -52,9 +49,9 @@ for f in files:
 
 
             # save image as HR
-            Path(args.output_path_HR).mkdir(parents=True, exist_ok=True)
-            save_path = args.output_path_HR + file_name + '_' + str(index) + args.output_format
-            nib.save(nib.Nifti1Image(fdata_2D, None, header=data.header.copy()), save_path)
+            Path(args.input_path + '_HR').mkdir(parents=True, exist_ok=True)
+            save_path = Path(args.input_path + '_HR') / Path(file_name[len(args.input_path)+1:] + '_' + str(index) + args.output_format)
+            nib.save(nib.Nifti1Image(fdata_2D, None, header=data.header.copy()), str(save_path))
 
 
     ##### numpy array
@@ -107,10 +104,11 @@ for f in files:
 
 
     # save image as LR
-    Path(args.output_path_LR).mkdir(parents=True, exist_ok=True)
+    Path(args.input_path + '_LR').mkdir(parents=True, exist_ok=True)
     if args.dimension == '3':
-        save_path = args.output_path_LR + file_name + '_' + str(index) + args.output_format
-        nib.save(nib.Nifti1Image(LR_img_real, None, header=data.header.copy()), save_path)    
+        save_path = Path(args.input_path + '_LR') / Path(file_name[len(args.input_path)+1:] + args.output_format)
+        nib.save(nib.Nifti1Image(LR_img_real, None, header=data.header.copy()), str(save_path))
+
     else:
         for index in range(LR_img_real.shape[args.axis_2D]):
             ##### 2D version
@@ -123,6 +121,6 @@ for f in files:
             # print("LR_img_real_2D: ", LR_img_real_2D.shape)
             # print("LR_img_real_2D: ", LR_img_real_2D.dtype)
 
-            # save image as HR
-            save_path = args.output_path_LR + file_name + '_' + str(index) + args.output_format
-            nib.save(nib.Nifti1Image(LR_img_real_2D, None, header=data.header.copy()), save_path)
+            # save image as LR
+            save_path = Path(args.input_path + '_LR') / Path(file_name[len(args.input_path)+1:] + '_' + str(index) + args.output_format)
+            nib.save(nib.Nifti1Image(LR_img_real_2D, None, header=data.header.copy()), str(save_path))
