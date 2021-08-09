@@ -1,8 +1,6 @@
 import numpy as np
 import nibabel as nib
-# from PIL import Image
 import argparse
-# import os.path
 from pathlib import Path
 
 parser = argparse.ArgumentParser(description='')
