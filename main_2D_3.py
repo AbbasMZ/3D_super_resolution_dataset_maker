@@ -9,7 +9,6 @@ parser.add_argument('-ip', '--input_path', default='/run/media/abbas/1TB_E/Study
 parser.add_argument('-of', '--output_format', default='.nii.gz', type=str, choices=['.nii.gz', '.nii'], dest='output_format')
 parser.add_argument('-opl', '--output_path_LR', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1_2D_LR/', type=str, dest='output_path_LR')
 parser.add_argument('-oph', '--output_path_HR', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1_2D_HR/', type=str, dest='output_path_HR')
-""
 args = parser.parse_args()
 
 ##### Retrieve list of files in the input path
@@ -22,6 +21,8 @@ for f in files:
 
     file_name = f[:-len(args.input_format)]
     print('starting file: ', f)
+
+    
     ##### load 3D image as HR
     data = nib.load(args.input_path + file_name + args.input_format)
     # print("data: ", data.shape)
