@@ -1,15 +1,7 @@
-# from re import A
 import numpy as np
-# import scipy.fft as spfft
 import nibabel as nib
-# import torch.nn
-# import torch
 # from PIL import Image
 import argparse
-# import matplotlib.pyplot as plt
-# import matplotlib.image as mpimg
-
-# img = mpimg.imread('sample.jpeg')
 
 parser = argparse.ArgumentParser(description='')
 parser.add_argument('-in', '--input_name', default='IXI012-HH-1211-T1', type=str, dest='input_name')
@@ -19,7 +11,6 @@ parser.add_argument('-on', '--output_name', default=None, type=str, dest='output
 parser.add_argument('-of', '--output_format', default='.nii.gz', type=str, choices=['.nii.gz', '.nii'], dest='output_format')
 parser.add_argument('-opl', '--output_path_LR', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1_2D_LR/', type=str, dest='output_path_LR')
 parser.add_argument('-oph', '--output_path_HR', default='/run/media/abbas/1TB_E/Study/Vision/3d_super_resolution/generating_LR_from_HR/T1_2D_HR/', type=str, dest='output_path_HR')
-""
 args = parser.parse_args()
 
 ##### load 3D image as HR
