@@ -21,5 +21,7 @@ Copy your 3D nifti dataset to a directory under the current path.
 
 For 2D and 3D undersampling use `main_2D.py` and `main_3D.py` respectively.
 
-you can set the downsampling factor for integer numbers and for example if you set it to 4, 1/4 of high frequency information will be removed and replaced with zero in the Fourier Space.
-
+You can set the downsampling factor `-f` for integer numbers and for example if you set it to 4, 1/4 of high frequency information will be removed and replaced with zero in the Fourier Space.
+Using `-d` You can also choose to have the output of each file in a 3D format or a series of 2D files.
+If you choose the output to be in 2D files, using `-x` being 0, 1, or 2, you can choose which axis to be used for the slicing.
+In the case of brain MRI images, usually `-x 1` would result in axial slices.
