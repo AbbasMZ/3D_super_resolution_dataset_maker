@@ -38,7 +38,7 @@ for f in files:
         for index in range(fdata.shape[args.axis_2D]):
             ##### 2D version
             if args.axis_2D == 0:
-                fdata_2D = fdata[:,index,:]
+                fdata_2D = fdata[index,:,:]
             elif args.axis_2D == 1:
                 fdata_2D = fdata[:,index,:]
             else:
@@ -113,7 +113,7 @@ for f in files:
         for index in range(LR_img_real.shape[args.axis_2D]):
             ##### 2D version
             if args.axis_2D == 0:
-                LR_img_real_2D = LR_img_real[:,index,:]
+                LR_img_real_2D = LR_img_real[index,:,:]
             elif args.axis_2D == 1:
                 LR_img_real_2D = LR_img_real[:,index,:]
             else:
