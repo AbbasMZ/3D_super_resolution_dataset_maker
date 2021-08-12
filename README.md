@@ -5,7 +5,7 @@ Note that technically, the notion of LR here refers to downsampling as it fits m
 ## Installation
 Clone this repository:
 ```
-git clone https://github.com/AbbasMZ/HydraPicker_Colab.git
+git clone https://github.com/AbbasMZ/3D_super_resolution_dataset_maker.git
 ```
 Either use the current environment or create a new virtual environment.
 Make sure it contains python >= 3.5.
